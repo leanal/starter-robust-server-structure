@@ -10,20 +10,6 @@ const countsRouter = require("./counts/counts.router");
 
 app.use(express.json()); // built-in middleware that adds a body property to the request (req.body)
 
-app.get("/counts/:countId", (req, res, next) => {
-  const { countId } = req.params;
-  const foundCount = counts[countId];
-
-  if (foundCount === undefined) {
-    // next(`Count id not found: ${countId}`);
-    next({ 
-      status: 404, 
-      message: `Count id not found: ${countId}` });
-  } else {
-    res.json({ data: foundCount }); // Return a JSON object, not a number.
-  }
-});
-
 // app.get("/counts", (req, res) => {
 //   res.json({ data: counts });
 // });

@@ -62,7 +62,11 @@ function create(req, res) {
 }
 
 function list(req, res) {
-  res.json({ data: flips });
+//   res.json({ data: flips });
+  // added after mergeParams
+  const { countId } = req.params;
+  const byResult = countId ? flip => flip.result === countId : () => true;
+  res.json({ data: flips.filter(byResult) });
 }
 
 function read(req, res) {
