@@ -5,6 +5,9 @@ const app = express();
 const flips = require("./data/flips-data");
 const counts = require("./data/counts-data");
 
+const flipsRouter = require("./flips/flips.router");
+const countsRouter = require("./counts/counts.router");
+
 app.use(express.json()); // built-in middleware that adds a body property to the request (req.body)
 
 app.get("/counts/:countId", (req, res, next) => {
@@ -21,10 +24,12 @@ app.get("/counts/:countId", (req, res, next) => {
   }
 });
 
-app.get("/counts", (req, res) => {
-  res.json({ data: counts });
-});
+// app.get("/counts", (req, res) => {
+//   res.json({ data: counts });
+// });
+app.use("/counts", countsRouter); // Note: app.use
 
+/*
 app.get("/flips/:flipId", (req, res, next) => {
   const { flipId } = req.params;
   // const flipId = req.params.flipId;
@@ -39,11 +44,15 @@ app.get("/flips/:flipId", (req, res, next) => {
       message: `Flip id not found: ${flipId}` });
   }
 });
+*/
 
-app.get("/flips", (req, res) => {
-  res.json({ data: flips });
-});
+// /* Replaced by app.use */
+// app.get("/flips", (req, res) => {
+//   res.json({ data: flips });
+// });
+app.use("/flips", flipsRouter); // Note: app.use
 
+/*
 // New middleware function to validate the request body
 function bodyHasResultProperty(req, res, next) {
   const { data: { result } = {} } = req.body;
@@ -82,6 +91,7 @@ app.post(
     // }
   }
 );
+*/
 
 // Not found handler
 app.use((request, response, next) => {
